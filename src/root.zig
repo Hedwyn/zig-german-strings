@@ -32,7 +32,7 @@ pub const LongString = extern struct {
     ptr: [*]u8,
 };
 
-const GermanString = extern union {
+pub const GermanString = extern union {
     short: ShortString,
     long: LongString,
 
