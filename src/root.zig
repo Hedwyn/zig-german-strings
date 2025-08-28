@@ -57,7 +57,10 @@ pub const GermanString = extern union {
         long_str.ptr = @constCast(string);
         return .{ .long = long_str };
     }
-
+    pub fn initComptime(comptime string: []const u8) GermanString {
+        const len = string.len;
+        return GermanString.init(@ptrCast(string), len);
+    }
     /// Gets a slice to the actual German String content,
     /// so that it can be used like a normal string.
     /// This should be the main method to interact with the string content
@@ -159,7 +162,9 @@ test "german string long" {
     const long = GermanString.init(test_case, test_case.len);
     try testing.expectEqualStrings(long.toSlice(), test_case);
 }
-
+test "german string init comptime" {
+    _ = GermanString.initComptime("Hello World !");
+}
 test "german string long equals" {
     const test_case = "This sentence does not fit in a short string";
     const long = GermanString.init(test_case, test_case.len);
